@@ -1,10 +1,23 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { NextResponse } from "next/server";
+import { auth } from "@clerk/nextjs/server";
+import connectDB from "@/app/lib/mongodb";
+import Analysis from "@/app/models/Analysis";
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
 export async function POST(request) {
   try {
+    // Check authentication
+    const { userId } = await auth();
+
+    if (!userId) {
+      return NextResponse.json(
+        { error: "Unauthorized. Please sign in." },
+        { status: 401 },
+      );
+    }
+
     const formData = await request.formData();
     const file = formData.get("file");
     const jobTitle = formData.get("jobTitle") || "";
@@ -102,9 +115,21 @@ Provide at least 2-4 tips for each category, mixing "good" (what they did well) 
     // Parse the JSON response
     const feedback = JSON.parse(analysisText);
 
+    // Connect to MongoDB and save the analysis
+    await connectDB();
+
+    const analysis = await Analysis.create({
+      userId,
+      fileName: file.name,
+      jobTitle,
+      companyName,
+      feedback,
+    });
+
     return NextResponse.json({
       success: true,
       feedback,
+      analysisId: analysis._id.toString(),
     });
   } catch (error) {
     console.error("Error analyzing resume:", error);

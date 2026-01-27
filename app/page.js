@@ -1,8 +1,15 @@
+"use client";
+
 import Link from "next/link";
+import { useAuth } from "@clerk/nextjs";
+import Navbar from "./components/Navbar";
 
 export default function Home() {
+  const { isSignedIn } = useAuth();
+
   return (
     <div className="min-h-screen bg-black text-white">
+      {isSignedIn && <Navbar />}
       {/* Animated background */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
         <div className="absolute -top-40 -right-40 w-80 h-80 bg-purple-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
@@ -31,34 +38,60 @@ export default function Home() {
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <Link
-              href="/upload"
-              className="group relative inline-flex items-center justify-center px-8 py-4 text-lg font-bold text-white bg-gradient-to-r from-purple-600 to-pink-600 rounded-full overflow-hidden shadow-2xl transition-all duration-300 hover:scale-105 hover:shadow-purple-500/50"
-            >
-              <span className="relative z-10 flex items-center gap-2">
-                <span>Analyze Your Resume</span>
-                <svg
-                  className="w-5 h-5 group-hover:translate-x-1 transition-transform"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
+            {isSignedIn ? (
+              <Link
+                href="/upload"
+                className="group relative inline-flex items-center justify-center px-8 py-4 text-lg font-bold text-white bg-gradient-to-r from-purple-600 to-pink-600 rounded-full overflow-hidden shadow-2xl transition-all duration-300 hover:scale-105 hover:shadow-purple-500/50"
+              >
+                <span className="relative z-10 flex items-center gap-2">
+                  <span>Analyze Your Resume</span>
+                  <svg
+                    className="w-5 h-5 group-hover:translate-x-1 transition-transform"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M13 7l5 5m0 0l-5 5m5-5H6"
+                    />
+                  </svg>
+                </span>
+              </Link>
+            ) : (
+              <>
+                <Link
+                  href="/sign-up"
+                  className="group relative inline-flex items-center justify-center px-8 py-4 text-lg font-bold text-white bg-gradient-to-r from-purple-600 to-pink-600 rounded-full overflow-hidden shadow-2xl transition-all duration-300 hover:scale-105 hover:shadow-purple-500/50"
                 >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M13 7l5 5m0 0l-5 5m5-5H6"
-                  />
-                </svg>
-              </span>
-            </Link>
+                  <span className="relative z-10 flex items-center gap-2">
+                    <span>Get Started Free</span>
+                    <svg
+                      className="w-5 h-5 group-hover:translate-x-1 transition-transform"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M13 7l5 5m0 0l-5 5m5-5H6"
+                      />
+                    </svg>
+                  </span>
+                </Link>
 
-            <Link
-              href="/history"
-              className="inline-flex items-center justify-center px-8 py-4 text-lg font-semibold text-white border-2 border-purple-500 rounded-full hover:bg-purple-500/10 transition-all duration-300"
-            >
-              View History
-            </Link>
+                <Link
+                  href="/sign-in"
+                  className="inline-flex items-center justify-center px-8 py-4 text-lg font-semibold text-white border-2 border-purple-500 rounded-full hover:bg-purple-500/10 transition-all duration-300"
+                >
+                  Sign In
+                </Link>
+              </>
+            )}
           </div>
 
           {/* Stats */}
