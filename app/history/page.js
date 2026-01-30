@@ -73,7 +73,7 @@ export default function HistoryPage() {
         <div className="max-w-6xl mx-auto">
           <div className="flex justify-between items-center mb-8">
             <div>
-              <h1 className="text-4xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent mb-2">
+              <h1 className="text-4xl font-bold bg-linear-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent mb-2">
                 Analysis History
               </h1>
               <p className="text-lg text-gray-300">
@@ -82,14 +82,14 @@ export default function HistoryPage() {
             </div>
             <button
               onClick={() => router.push("/upload")}
-              className="px-6 py-3 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-lg font-semibold hover:from-purple-600 hover:to-pink-600 transition-all"
+              className="px-6 py-3 bg-linear-to-r from-purple-500 to-pink-500 text-white rounded-lg font-semibold hover:from-purple-600 hover:to-pink-600 transition-all"
             >
               New Analysis
             </button>
           </div>
 
           {history.length === 0 ? (
-            <div className="bg-gradient-to-br from-gray-900 to-gray-800 border border-gray-700 rounded-2xl shadow-xl p-12 text-center">
+            <div className="bg-linear-to-br from-gray-900 to-gray-800 border border-gray-700 rounded-2xl shadow-xl p-12 text-center">
               <div className="text-6xl mb-4">📄</div>
               <h2 className="text-2xl font-semibold text-white mb-2">
                 No Analysis History
@@ -100,7 +100,7 @@ export default function HistoryPage() {
               </p>
               <button
                 onClick={() => router.push("/upload")}
-                className="px-6 py-3 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-lg font-semibold hover:from-purple-600 hover:to-pink-600 transition-all"
+                className="px-6 py-3 bg-linear-to-r from-purple-500 to-pink-500 text-white rounded-lg font-semibold hover:from-purple-600 hover:to-pink-600 transition-all"
               >
                 Upload Resume
               </button>
@@ -110,7 +110,7 @@ export default function HistoryPage() {
               {history.map((item) => (
                 <div
                   key={item._id}
-                  className="bg-gradient-to-br from-gray-900 to-gray-800 border border-gray-700 rounded-2xl shadow-xl hover:shadow-2xl hover:border-purple-500 transition-all overflow-hidden"
+                  className="bg-linear-to-br from-gray-900 to-gray-800 border border-gray-700 rounded-2xl shadow-xl hover:shadow-2xl hover:border-purple-500 transition-all overflow-hidden"
                 >
                   <div className="p-6">
                     {/* Header with score */}
@@ -135,7 +135,7 @@ export default function HistoryPage() {
                           </p>
                         )}
                       </div>
-                      <div className="flex-shrink-0 ml-4">
+                      <div className="shrink-0 ml-4">
                         <ScoreCircle score={item.feedback.overallScore} />
                       </div>
                     </div>
@@ -177,7 +177,7 @@ export default function HistoryPage() {
                     <div className="flex gap-2">
                       <button
                         onClick={() => handleView(item._id)}
-                        className="flex-1 px-4 py-2 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-lg font-medium hover:from-purple-600 hover:to-pink-600 transition-all"
+                        className="flex-1 px-4 py-2 bg-linear-to-r from-purple-500 to-pink-500 text-white rounded-lg font-medium hover:from-purple-600 hover:to-pink-600 transition-all"
                       >
                         View Details
                       </button>
@@ -198,7 +198,7 @@ export default function HistoryPage() {
         {/* Delete Confirmation Modal */}
         {deleteId && (
           <div className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-50 px-4">
-            <div className="bg-gradient-to-br from-gray-900 to-gray-800 border border-gray-700 rounded-2xl shadow-2xl p-8 max-w-md w-full transform transition-all">
+            <div className="bg-linear-to-br from-gray-900 to-gray-800 border border-gray-700 rounded-2xl shadow-2xl p-8 max-w-md w-full transform transition-all">
               <div className="flex items-center justify-center w-16 h-16 mx-auto mb-4 bg-red-500/20 rounded-full">
                 <svg
                   className="w-8 h-8 text-red-400"
@@ -230,7 +230,7 @@ export default function HistoryPage() {
                 </button>
                 <button
                   onClick={confirmDelete}
-                  className="flex-1 px-6 py-3 bg-gradient-to-r from-red-600 to-red-500 text-white rounded-lg font-semibold hover:from-red-700 hover:to-red-600 transition-all"
+                  className="flex-1 px-6 py-3 bg-linear-to-r from-red-600 to-red-500 text-white rounded-lg font-semibold hover:from-red-700 hover:to-red-600 transition-all"
                 >
                   Delete
                 </button>

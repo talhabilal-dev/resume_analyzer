@@ -22,10 +22,10 @@ export default function Home() {
         <div className="text-center mb-20 pt-20">
           <div className="inline-block mb-6">
             <div className="relative">
-              <h1 className="text-7xl md:text-8xl font-black mb-4 bg-gradient-to-r from-purple-400 via-pink-400 to-blue-400 bg-clip-text text-transparent animate-gradient">
+              <h1 className="text-7xl md:text-8xl font-black mb-4 bg-linear-to-r from-purple-400 via-pink-400 to-blue-400 bg-clip-text text-transparent animate-gradient">
                 RESUMIND
               </h1>
-              <div className="absolute -bottom-2 left-0 right-0 h-1 bg-gradient-to-r from-purple-500 via-pink-500 to-blue-500 rounded-full"></div>
+              <div className="absolute -bottom-2 left-0 right-0 h-1 bg-linear-to-r from-purple-500 via-pink-500 to-blue-500 rounded-full"></div>
             </div>
           </div>
 
@@ -41,7 +41,7 @@ export default function Home() {
             {isSignedIn ? (
               <Link
                 href="/upload"
-                className="group relative inline-flex items-center justify-center px-8 py-4 text-lg font-bold text-white bg-gradient-to-r from-purple-600 to-pink-600 rounded-full overflow-hidden shadow-2xl transition-all duration-300 hover:scale-105 hover:shadow-purple-500/50"
+                className="group relative inline-flex items-center justify-center px-8 py-4 text-lg font-bold text-white bg-linear-to-r from-purple-600 to-pink-600 rounded-full overflow-hidden shadow-2xl transition-all duration-300 hover:scale-105 hover:shadow-purple-500/50"
               >
                 <span className="relative z-10 flex items-center gap-2">
                   <span>Analyze Your Resume</span>
@@ -64,7 +64,7 @@ export default function Home() {
               <>
                 <Link
                   href="/sign-up"
-                  className="group relative inline-flex items-center justify-center px-8 py-4 text-lg font-bold text-white bg-gradient-to-r from-purple-600 to-pink-600 rounded-full overflow-hidden shadow-2xl transition-all duration-300 hover:scale-105 hover:shadow-purple-500/50"
+                  className="group relative inline-flex items-center justify-center px-8 py-4 text-lg font-bold text-white bg-linear-to-r from-purple-600 to-pink-600 rounded-full overflow-hidden shadow-2xl transition-all duration-300 hover:scale-105 hover:shadow-purple-500/50"
                 >
                   <span className="relative z-10 flex items-center gap-2">
                     <span>Get Started Free</span>
@@ -97,19 +97,19 @@ export default function Home() {
           {/* Stats */}
           <div className="grid grid-cols-3 gap-8 max-w-2xl mx-auto mt-16">
             <div className="text-center">
-              <div className="text-4xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+              <div className="text-4xl font-bold bg-linear-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
                 98%
               </div>
               <div className="text-sm text-gray-400 mt-1">Accuracy</div>
             </div>
             <div className="text-center">
-              <div className="text-4xl font-bold bg-gradient-to-r from-pink-400 to-blue-400 bg-clip-text text-transparent">
+              <div className="text-4xl font-bold bg-linear-to-r from-pink-400 to-blue-400 bg-clip-text text-transparent">
                 &lt;10s
               </div>
               <div className="text-sm text-gray-400 mt-1">Analysis Time</div>
             </div>
             <div className="text-center">
-              <div className="text-4xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+              <div className="text-4xl font-bold bg-linear-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
                 AI
               </div>
               <div className="text-sm text-gray-400 mt-1">Powered</div>
@@ -119,7 +119,7 @@ export default function Home() {
 
         {/* Features */}
         <div className="grid md:grid-cols-3 gap-8 mb-20">
-          <div className="group bg-gradient-to-br from-gray-900 to-gray-800 border border-gray-700 p-8 rounded-3xl hover:border-purple-500 transition-all duration-300 hover:shadow-2xl hover:shadow-purple-500/20">
+          <div className="group bg-linear-to-br from-gray-900 to-gray-800 border border-gray-700 p-8 rounded-3xl hover:border-purple-500 transition-all duration-300 hover:shadow-2xl hover:shadow-purple-500/20">
             <div className="text-5xl mb-6 group-hover:scale-110 transition-transform">
               🎯
             </div>
@@ -132,7 +132,7 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="group bg-gradient-to-br from-gray-900 to-gray-800 border border-gray-700 p-8 rounded-3xl hover:border-pink-500 transition-all duration-300 hover:shadow-2xl hover:shadow-pink-500/20">
+          <div className="group bg-linear-to-br from-gray-900 to-gray-800 border border-gray-700 p-8 rounded-3xl hover:border-pink-500 transition-all duration-300 hover:shadow-2xl hover:shadow-pink-500/20">
             <div className="text-5xl mb-6 group-hover:scale-110 transition-transform">
               ⚡
             </div>
@@ -145,7 +145,7 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="group bg-gradient-to-br from-gray-900 to-gray-800 border border-gray-700 p-8 rounded-3xl hover:border-blue-500 transition-all duration-300 hover:shadow-2xl hover:shadow-blue-500/20">
+          <div className="group bg-linear-to-br from-gray-900 to-gray-800 border border-gray-700 p-8 rounded-3xl hover:border-blue-500 transition-all duration-300 hover:shadow-2xl hover:shadow-blue-500/20">
             <div className="text-5xl mb-6 group-hover:scale-110 transition-transform">
               💡
             </div>
@@ -159,17 +159,17 @@ export default function Home() {
         </div>
 
         {/* How it works */}
-        <div className="bg-gradient-to-br from-gray-900 to-gray-800 border border-gray-700 rounded-3xl p-12 mb-20">
-          <h2 className="text-4xl font-bold text-center mb-12 bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+        <div className="bg-linear-to-br from-gray-900 to-gray-800 border border-gray-700 rounded-3xl p-12 mb-20">
+          <h2 className="text-4xl font-bold text-center mb-12 bg-linear-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
             How It Works
           </h2>
           <div className="grid md:grid-cols-3 gap-12">
             <div className="text-center group">
               <div className="relative inline-block mb-6">
-                <div className="bg-gradient-to-br from-purple-600 to-pink-600 w-20 h-20 rounded-2xl flex items-center justify-center text-3xl font-bold text-white mx-auto shadow-xl group-hover:scale-110 transition-transform">
+                <div className="bg-linear-to-br from-purple-600 to-pink-600 w-20 h-20 rounded-2xl flex items-center justify-center text-3xl font-bold text-white mx-auto shadow-xl group-hover:scale-110 transition-transform">
                   1
                 </div>
-                <div className="absolute inset-0 bg-gradient-to-br from-purple-600 to-pink-600 rounded-2xl blur-xl opacity-50"></div>
+                <div className="absolute inset-0 bg-linear-to-br from-purple-600 to-pink-600 rounded-2xl blur-xl opacity-50"></div>
               </div>
               <h3 className="font-bold text-xl mb-3 text-white">Upload</h3>
               <p className="text-gray-400">
@@ -179,10 +179,10 @@ export default function Home() {
 
             <div className="text-center group">
               <div className="relative inline-block mb-6">
-                <div className="bg-gradient-to-br from-pink-600 to-blue-600 w-20 h-20 rounded-2xl flex items-center justify-center text-3xl font-bold text-white mx-auto shadow-xl group-hover:scale-110 transition-transform">
+                <div className="bg-linear-to-br from-pink-600 to-blue-600 w-20 h-20 rounded-2xl flex items-center justify-center text-3xl font-bold text-white mx-auto shadow-xl group-hover:scale-110 transition-transform">
                   2
                 </div>
-                <div className="absolute inset-0 bg-gradient-to-br from-pink-600 to-blue-600 rounded-2xl blur-xl opacity-50"></div>
+                <div className="absolute inset-0 bg-linear-to-br from-pink-600 to-blue-600 rounded-2xl blur-xl opacity-50"></div>
               </div>
               <h3 className="font-bold text-xl mb-3 text-white">Analyze</h3>
               <p className="text-gray-400">
@@ -192,10 +192,10 @@ export default function Home() {
 
             <div className="text-center group">
               <div className="relative inline-block mb-6">
-                <div className="bg-gradient-to-br from-blue-600 to-purple-600 w-20 h-20 rounded-2xl flex items-center justify-center text-3xl font-bold text-white mx-auto shadow-xl group-hover:scale-110 transition-transform">
+                <div className="bg-linear-to-br from-blue-600 to-purple-600 w-20 h-20 rounded-2xl flex items-center justify-center text-3xl font-bold text-white mx-auto shadow-xl group-hover:scale-110 transition-transform">
                   3
                 </div>
-                <div className="absolute inset-0 bg-gradient-to-br from-blue-600 to-purple-600 rounded-2xl blur-xl opacity-50"></div>
+                <div className="absolute inset-0 bg-linear-to-br from-blue-600 to-purple-600 rounded-2xl blur-xl opacity-50"></div>
               </div>
               <h3 className="font-bold text-xl mb-3 text-white">Improve</h3>
               <p className="text-gray-400">
@@ -206,7 +206,7 @@ export default function Home() {
         </div>
 
         {/* CTA Section */}
-        <div className="text-center bg-gradient-to-r from-purple-900/30 to-pink-900/30 border border-purple-500/30 rounded-3xl p-12">
+        <div className="text-center bg-linear-to-r from-purple-900/30 to-pink-900/30 border border-purple-500/30 rounded-3xl p-12">
           <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white">
             Ready to Elevate Your Resume?
           </h2>
@@ -215,7 +215,7 @@ export default function Home() {
           </p>
           <Link
             href="/upload"
-            className="inline-flex items-center justify-center px-10 py-5 text-xl font-bold text-white bg-gradient-to-r from-purple-600 to-pink-600 rounded-full hover:scale-105 transition-all duration-300 shadow-2xl hover:shadow-purple-500/50"
+            className="inline-flex items-center justify-center px-10 py-5 text-xl font-bold text-white bg-linear-to-r from-purple-600 to-pink-600 rounded-full hover:scale-105 transition-all duration-300 shadow-2xl hover:shadow-purple-500/50"
           >
             Get Started Free
           </Link>

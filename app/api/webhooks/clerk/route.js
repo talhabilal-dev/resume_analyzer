@@ -5,11 +5,6 @@ import connectDB from "@/app/lib/mongodb";
 import User from "@/app/models/User";
 
 export async function POST(req) {
-  console.log("🚀 WEBHOOK ENDPOINT HIT! Route is working!");
-  console.log("Request received at:", new Date().toISOString());
-
-  const WEBHOOK_SECRET = process.env.CLERK_WEBHOOK_SECRET;
-
   if (!WEBHOOK_SECRET) {
     console.error("CLERK_WEBHOOK_SECRET is not set in environment variables");
     throw new Error("Please add CLERK_WEBHOOK_SECRET to .env.local");
@@ -51,15 +46,8 @@ export async function POST(req) {
   const eventType = evt.type;
   const { id, email_addresses, first_name, last_name, image_url } = evt.data;
 
-  console.log("=== CLERK WEBHOOK RECEIVED ===");
-  console.log("Event type:", eventType);
-  console.log("User ID:", id);
-  console.log("Full payload:", JSON.stringify(evt.data, null, 2));
-
   try {
-    console.log("Connecting to MongoDB...");
     await connectDB();
-    console.log("MongoDB connected successfully");
 
     if (eventType === "user.created" || eventType === "user.updated") {
       // Validate required fields
@@ -85,16 +73,10 @@ export async function POST(req) {
         updatedAt: new Date(),
       };
 
-      console.log("Saving user data:", userData);
-
       const user = await User.findOneAndUpdate({ clerkId: id }, userData, {
         upsert: true,
         new: true,
       });
-
-      console.log("✅ User saved successfully!");
-      console.log("User document ID:", user._id.toString());
-      console.log("User email:", user.email);
 
       return NextResponse.json(
         {
@@ -106,9 +88,7 @@ export async function POST(req) {
     }
 
     if (eventType === "user.deleted") {
-      console.log("Deleting user:", id);
-      const result = await User.findOneAndDelete({ clerkId: id });
-      console.log("User deleted:", result ? "✅ Success" : "❌ Not found");
+      await User.findOneAndDelete({ clerkId: id });
 
       return NextResponse.json(
         {
@@ -118,7 +98,6 @@ export async function POST(req) {
       );
     }
 
-    console.log("Unhandled event type:", eventType);
     return NextResponse.json({ message: "Event ignored" }, { status: 200 });
   } catch (error) {
     console.error("❌ ERROR processing webhook:");

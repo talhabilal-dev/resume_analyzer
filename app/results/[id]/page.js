@@ -72,7 +72,7 @@ export default function ResultsPage() {
         <div className="max-w-5xl mx-auto space-y-8">
           {/* Header */}
           <div className="text-center">
-            <h1 className="text-4xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent mb-2">
+            <h1 className="text-4xl font-bold bg-linear-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent mb-2">
               Resume Analysis Results
             </h1>
             {(analysis.companyName || analysis.jobTitle) && (
@@ -104,7 +104,7 @@ export default function ResultsPage() {
           <div className="flex gap-4 justify-center flex-wrap">
             <button
               onClick={() => router.push("/upload")}
-              className="px-6 py-3 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-lg font-semibold hover:from-purple-600 hover:to-pink-600 transition-all"
+              className="px-6 py-3 bg-linear-to-r from-purple-500 to-pink-500 text-white rounded-lg font-semibold hover:from-purple-600 hover:to-pink-600 transition-all"
             >
               Analyze Another Resume
             </button>

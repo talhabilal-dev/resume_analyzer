@@ -17,14 +17,14 @@ const Category = ({ title, score }) => {
                     <span className={textColor}>{score}</span>
                     <span className="text-gray-400">/100</span>
                 </p>
-            </div>
+            </div>Upload Resume
         </div>
     )
 }
 
 const Summary = ({ feedback }) => {
     return (
-        <div className="bg-gradient-to-br from-gray-900 to-gray-800 border border-gray-700 rounded-2xl shadow-xl w-full">
+        <div className="bg-linear-to-br from-gray-900 to-gray-800 border border-gray-700 rounded-2xl shadow-xl w-full">
             <div className="flex flex-row items-center p-6 gap-8 border-b border-gray-700">
                 <ScoreGauge score={feedback.overallScore} />
 

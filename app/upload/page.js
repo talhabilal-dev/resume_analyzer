@@ -60,7 +60,7 @@ export default function UploadPage() {
         <div className="max-w-3xl mx-auto">
           <div className="flex justify-between items-center mb-8">
             <div className="text-center flex-1">
-              <h1 className="text-4xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent mb-4">
+              <h1 className="text-4xl font-bold bg-linear-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent mb-4">
                 Upload Your Resume
               </h1>
               <p className="text-lg text-gray-300">
@@ -75,7 +75,7 @@ export default function UploadPage() {
             </button>
           </div>
 
-          <div className="bg-gradient-to-br from-gray-900 to-gray-800 border border-gray-700 rounded-2xl shadow-xl p-8 space-y-6">
+          <div className="bg-linear-to-br from-gray-900 to-gray-800 border border-gray-700 rounded-2xl shadow-xl p-8 space-y-6">
             {/* Optional job details */}
             <div className="space-y-4">
               <div>
@@ -132,7 +132,7 @@ export default function UploadPage() {
             <button
               onClick={handleAnalyze}
               disabled={!file || isAnalyzing}
-              className="w-full bg-gradient-to-r from-purple-500 to-pink-500 text-white py-3 px-6 rounded-lg font-semibold text-lg hover:from-purple-600 hover:to-pink-600 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+              className="w-full bg-linear-to-r from-purple-500 to-pink-500 text-white py-3 px-6 rounded-lg font-semibold text-lg hover:from-purple-600 hover:to-pink-600 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
             >
               {isAnalyzing ? (
                 <span className="flex items-center justify-center gap-2">

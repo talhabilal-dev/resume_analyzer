@@ -13,6 +13,12 @@ const Navbar = () => {
                     </Link>
                     <div className="flex items-center gap-4">
                         <Link
+                            href="/usage"
+                            className="px-4 py-2 text-gray-300 hover:text-white transition-colors font-medium"
+                        >
+                            Usage
+                        </Link>
+                        <Link
                             href="/upload"
                             className="px-6 py-2 bg-linear-to-r from-purple-600 to-pink-600 text-white rounded-full font-semibold hover:from-purple-700 hover:to-pink-700 transition-all hover:scale-105 shadow-lg hover:shadow-purple-500/50"
                         >
