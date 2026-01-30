@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import FileUploader from "../components/FileUploader";
 import Navbar from "../components/Navbar";
+import { toast } from "sonner";
 
 export default function UploadPage() {
   const [file, setFile] = useState(null);
@@ -36,8 +37,11 @@ export default function UploadPage() {
       const data = await response.json();
 
       if (!response.ok) {
+        toast.error(data.error || "Failed to analyze resume");
         throw new Error(data.error || "Failed to analyze resume");
       }
+
+      toast.success("Resume analyzed successfully!");
 
       // Navigate to results page with the analysis ID from database
       router.push(`/results/${data.analysisId}`);

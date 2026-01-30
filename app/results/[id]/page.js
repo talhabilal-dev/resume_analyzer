@@ -5,7 +5,7 @@ import { useRouter, useParams } from "next/navigation";
 import Summary from "../../components/Summary";
 import Details from "../../components/Details";
 import Navbar from "../../components/Navbar";
-
+import { toast } from "sonner";
 export default function ResultsPage() {
   const [analysis, setAnalysis] = useState(null);
   const router = useRouter();
@@ -23,13 +23,16 @@ export default function ResultsPage() {
       try {
         const response = await fetch(`/api/analyses/${analysisId}`);
         if (!response.ok) {
+          toast.error("Analysis not found. Redirecting to upload page.");
           router.push("/upload");
           return;
         }
         const data = await response.json();
+        toast.success("Analysis fetched successfully!");
         setAnalysis(data.analysis);
       } catch (error) {
-        console.error("Error fetching analysis:", error);
+        // console.error("Error fetching analysis:", error);
+        toast.error("Failed to fetch analysis. Redirecting to upload page.");
         router.push("/upload");
       }
     };

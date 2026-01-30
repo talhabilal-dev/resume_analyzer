@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import ScoreCircle from "../components/ScoreCircle";
 import Navbar from "../components/Navbar";
+import { toast } from "sonner";
 
 export default function HistoryPage() {
   const [history, setHistory] = useState([]);
@@ -23,7 +24,8 @@ export default function HistoryPage() {
         setHistory(data.analyses);
       }
     } catch (error) {
-      console.error("Error loading history:", error);
+      // console.error("Error loading history:", error);
+      toast.error("Failed to load analysis history.");
     } finally {
       setLoading(false);
     }
@@ -41,10 +43,12 @@ export default function HistoryPage() {
         method: "DELETE",
       });
       if (response.ok) {
+        toast.success("Analysis deleted successfully!");
         loadHistory();
       }
     } catch (error) {
-      console.error("Error deleting analysis:", error);
+      // console.error("Error deleting analysis:", error);
+      toast.error("Failed to delete analysis.");
     } finally {
       setDeleteId(null);
     }

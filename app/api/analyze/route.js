@@ -3,6 +3,7 @@ import { NextResponse } from "next/server";
 import { auth } from "@clerk/nextjs/server";
 import connectDB from "@/app/lib/mongodb";
 import Analysis from "@/app/models/Analysis";
+import User from "@/app/models/User";
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
@@ -15,6 +16,30 @@ export async function POST(request) {
       return NextResponse.json(
         { error: "Unauthorized. Please sign in." },
         { status: 401 },
+      );
+    }
+
+    // Connect to database
+    await connectDB();
+
+    // Get user and check daily limit
+    const user = await User.findOne({ clerkId: userId });
+
+    if (!user) {
+      return NextResponse.json({ error: "User not found." }, { status: 404 });
+    }
+
+    // Check if user can upload today
+    if (!user.canUploadToday()) {
+      return NextResponse.json(
+        {
+          error: "Daily limit reached",
+          message:
+            "You have reached your daily limit of 1 resume analysis. Please try again tomorrow.",
+          limit: user.dailyUploadLimit,
+          uploadsToday: user.uploadsToday,
+        },
+        { status: 429 },
       );
     }
 
@@ -115,9 +140,7 @@ Provide at least 2-4 tips for each category, mixing "good" (what they did well) 
     // Parse the JSON response
     const feedback = JSON.parse(analysisText);
 
-    // Connect to MongoDB and save the analysis
-    await connectDB();
-
+    // Save the analysis
     const analysis = await Analysis.create({
       userId,
       fileName: file.name,
@@ -126,10 +149,14 @@ Provide at least 2-4 tips for each category, mixing "good" (what they did well) 
       feedback,
     });
 
+    // Increment user's upload count for today
+    await user.incrementUploadCount();
+
     return NextResponse.json({
       success: true,
       feedback,
       analysisId: analysis._id.toString(),
+      uploadsRemaining: user.dailyUploadLimit - user.uploadsToday,
     });
   } catch (error) {
     console.error("Error analyzing resume:", error);
