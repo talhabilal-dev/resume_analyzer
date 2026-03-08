@@ -1,3 +1,4 @@
+@layer theme, base, clerk, components, utilities;
 @import "tailwindcss";
 
 @custom-variant dark (&:is(.dark *));
@@ -164,5 +165,28 @@
   }
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+@layer clerk {
+
+  .cl-socialButtonsBlockButton,
+  .cl-formFieldInput {
+    background: rgba(15, 23, 42, 0.68);
+    border-color: rgba(255, 255, 255, 0.14);
+  }
+
+  .cl-formFieldInput::placeholder {
+    color: #94a3b8;
+  }
+
+  .cl-formButtonPrimary {
+    background: linear-gradient(90deg, #d946ef 0%, #8b5cf6 50%, #3b82f6 100%);
+  }
+
+  .cl-formButtonPrimary:hover,
+  .cl-formButtonPrimary:focus,
+  .cl-formButtonPrimary:active {
+    filter: brightness(1.06);
   }
 }

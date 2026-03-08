@@ -1,7 +1,6 @@
 "use client";
 
 import { SignUp, useAuth } from "@clerk/nextjs";
-import { dark } from "@clerk/themes";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 
@@ -40,28 +39,6 @@ export default function SignUpPage() {
 
         <div className="flex items-center justify-center">
           <SignUp
-            appearance={{
-              baseTheme: dark,
-              elements: {
-                rootBox: "mx-auto",
-                card: "bg-gray-900/85 backdrop-blur-xl border border-gray-700 shadow-2xl",
-                headerTitle: "text-white",
-                headerSubtitle: "text-gray-300",
-                socialButtonsBlockButton:
-                  "bg-gray-800 border-gray-600 text-white hover:bg-gray-700",
-                socialButtonsBlockButtonText: "text-white",
-                dividerLine: "bg-gray-700",
-                dividerText: "text-gray-400",
-                formFieldLabel: "text-gray-200",
-                formFieldInput:
-                  "bg-gray-800 border-gray-600 text-white placeholder:text-gray-400",
-                formButtonPrimary:
-                  "bg-gradient-to-r from-purple-500 via-pink-500 to-blue-500 text-white hover:opacity-90",
-                footerActionText: "text-gray-300",
-                footerActionLink:
-                  "text-purple-300 hover:text-purple-200 font-medium",
-              },
-            }}
             fallbackRedirectUrl="/upload"
             signInUrl="/sign-in"
           />
