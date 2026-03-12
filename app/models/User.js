@@ -1,4 +1,8 @@
 import mongoose from "mongoose";
+import CreditTransaction from "./CreditTransaction.js";
+
+export const INITIAL_CREDITS = 10;
+export const CREDITS_PER_ANALYSIS = 5;
 
 const UserSchema = new mongoose.Schema({
   clerkId: {
@@ -19,18 +23,21 @@ const UserSchema = new mongoose.Schema({
   imageUrl: {
     type: String,
   },
-  lastUploadDate: {
-    type: Date,
-    default: null,
-  },
-  uploadsToday: {
+
+  // ---------- credits ----------
+  credits: {
     type: Number,
     default: 0,
+    min: 0,
   },
-  dailyUploadLimit: {
-    type: Number,
-    default: 1,
+
+  // ---------- Stripe ----------
+  stripeCustomerId: {
+    type: String,
+    default: null,
   },
+
+  // ---------- timestamps ----------
   createdAt: {
     type: Date,
     default: Date.now,
@@ -41,39 +48,70 @@ const UserSchema = new mongoose.Schema({
   },
 });
 
-// Method to check if user can upload today
-UserSchema.methods.canUploadToday = function () {
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
-
-  const lastUpload = this.lastUploadDate ? new Date(this.lastUploadDate) : null;
-
-  // If no upload date or last upload was on a different day, reset the counter
-  if (!lastUpload || lastUpload < today) {
-    return true;
-  }
-
-  // Check if user has reached daily limit
-  return this.uploadsToday < this.dailyUploadLimit;
+/** Returns true when the user has enough credits for one analysis. */
+UserSchema.methods.hasEnoughCredits = function (
+  amount = CREDITS_PER_ANALYSIS
+) {
+  return this.credits >= amount;
 };
 
-// Method to increment upload count
-UserSchema.methods.incrementUploadCount = async function () {
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
-
-  const lastUpload = this.lastUploadDate ? new Date(this.lastUploadDate) : null;
-
-  // If it's a new day, reset the counter
-  if (!lastUpload || lastUpload < today) {
-    this.uploadsToday = 1;
-    this.lastUploadDate = new Date();
-  } else {
-    this.uploadsToday += 1;
-    this.lastUploadDate = new Date();
+/**
+ * Deducts `amount` credits and records a usage transaction.
+ * Throws if the balance would go negative.
+ */
+UserSchema.methods.deductCredits = async function ({
+  amount = CREDITS_PER_ANALYSIS,
+  description = "Resume analysis",
+  analysisId = null,
+} = {}) {
+  if (this.credits < amount) {
+    throw new Error("Insufficient credits.");
   }
 
+  this.credits -= amount;
+  this.updatedAt = new Date();
   await this.save();
+
+  await CreditTransaction.create({
+    userId: this.clerkId,
+    type: "usage",
+    credits: -amount,
+    balanceAfter: this.credits,
+    description,
+    analysisId,
+  });
+
+  return this.credits;
+};
+
+/**
+ * Adds `amount` credits and records the reason as a transaction.
+ * `type` should be one of: "initial_grant" | "purchase" | "refund" | "bonus"
+ */
+UserSchema.methods.addCredits = async function ({
+  amount,
+  type = "purchase",
+  description = "",
+  stripePaymentIntentId = null,
+  stripeSessionId = null,
+} = {}) {
+  if (!amount || amount <= 0) throw new Error("Amount must be positive.");
+
+  this.credits += amount;
+  this.updatedAt = new Date();
+  await this.save();
+
+  await CreditTransaction.create({
+    userId: this.clerkId,
+    type,
+    credits: amount,
+    balanceAfter: this.credits,
+    description,
+    stripePaymentIntentId,
+    stripeSessionId,
+  });
+
+  return this.credits;
 };
 
 export default mongoose.models.User || mongoose.model("User", UserSchema);

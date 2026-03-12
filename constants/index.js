@@ -1,3 +1,18 @@
+// ─── Credit pricing ──────────────────────────────────────────────────────────
+// User enters any dollar amount ≥ MIN_PURCHASE_DOLLARS.
+// Credits awarded = floor(dollars * CREDITS_PER_DOLLAR)
+//   e.g.  $5  →  15 credits
+//         $10 →  30 credits
+//         $20 →  60 credits
+export const CREDITS_PER_DOLLAR = 3;       // 3 credits per $1
+export const MIN_PURCHASE_DOLLARS = 5;     // minimum $5
+export const MIN_PURCHASE_CREDITS = MIN_PURCHASE_DOLLARS * CREDITS_PER_DOLLAR; // 15
+
+/** Given a dollar amount, return how many credits the user will receive. */
+export function dollarsToCredits(dollars) {
+  return Math.floor(dollars * CREDITS_PER_DOLLAR);
+}
+
 export const resumes = [
   {
     id: "1",

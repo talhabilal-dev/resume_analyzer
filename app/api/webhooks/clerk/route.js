@@ -2,7 +2,8 @@ import { Webhook } from "svix";
 import { headers } from "next/headers";
 import { NextResponse } from "next/server";
 import connectDB from "@/app/lib/mongodb";
-import User from "@/app/models/User";
+import User, { INITIAL_CREDITS } from "@/app/models/User";
+import CreditTransaction from "@/app/models/CreditTransaction";
 
 export async function POST(req) {
   if (!WEBHOOK_SECRET) {
@@ -64,7 +65,7 @@ export async function POST(req) {
         );
       }
 
-      const userData = {
+      const profileFields = {
         clerkId: id,
         email: email_addresses[0].email_address,
         firstName: first_name || "",
@@ -73,10 +74,30 @@ export async function POST(req) {
         updatedAt: new Date(),
       };
 
-      const user = await User.findOneAndUpdate({ clerkId: id }, userData, {
-        upsert: true,
-        new: true,
-      });
+      // On insert (new user) seed the starting credit balance; never
+      // overwrite credits on a subsequent user.updated event.
+      const user = await User.findOneAndUpdate(
+        { clerkId: id },
+        {
+          $set: profileFields,
+          $setOnInsert: { credits: INITIAL_CREDITS },
+        },
+        { upsert: true, new: true },
+      );
+
+      // Record the welcome grant the first time only
+      if (eventType === "user.created") {
+        const existing = await CreditTransaction.countDocuments({ userId: id });
+        if (existing === 0) {
+          await CreditTransaction.create({
+            userId: id,
+            type: "initial_grant",
+            credits: INITIAL_CREDITS,
+            balanceAfter: INITIAL_CREDITS,
+            description: "Welcome bonus — 10 free credits",
+          });
+        }
+      }
 
       return NextResponse.json(
         {

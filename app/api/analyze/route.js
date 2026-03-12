@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 import { auth } from "@clerk/nextjs/server";
 import connectDB from "@/app/lib/mongodb";
 import Analysis from "@/app/models/Analysis";
-import User from "@/app/models/User";
+import User, { CREDITS_PER_ANALYSIS } from "@/app/models/User";
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
@@ -29,17 +29,16 @@ export async function POST(request) {
       return NextResponse.json({ error: "User not found." }, { status: 404 });
     }
 
-    // Check if user can upload today
-    if (!user.canUploadToday()) {
+    // Check credits
+    if (!user.hasEnoughCredits()) {
       return NextResponse.json(
         {
-          error: "Daily limit reached",
-          message:
-            "You have reached your daily limit of 1 resume analysis. Please try again tomorrow.",
-          limit: user.dailyUploadLimit,
-          uploadsToday: user.uploadsToday,
+          error: "Insufficient credits",
+          message: `You need ${CREDITS_PER_ANALYSIS} credits to analyze a resume. Please purchase more credits.`,
+          credits: user.credits,
+          required: CREDITS_PER_ANALYSIS,
         },
-        { status: 429 },
+        { status: 402 },
       );
     }
 
@@ -149,14 +148,18 @@ Provide at least 2-4 tips for each category, mixing "good" (what they did well) 
       feedback,
     });
 
-    // Increment user's upload count for today
-    await user.incrementUploadCount();
+    // Deduct credits for this analysis
+    await user.deductCredits({
+      amount: CREDITS_PER_ANALYSIS,
+      description: `Resume analysis — ${file.name}`,
+      analysisId: analysis._id,
+    });
 
     return NextResponse.json({
       success: true,
       feedback,
       analysisId: analysis._id.toString(),
-      uploadsRemaining: user.dailyUploadLimit - user.uploadsToday,
+      creditsRemaining: user.credits,
     });
   } catch (error) {
     console.error("Error analyzing resume:", error);
