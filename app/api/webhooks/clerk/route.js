@@ -6,7 +6,7 @@ import User, { INITIAL_CREDITS } from "@/app/models/User";
 import CreditTransaction from "@/app/models/CreditTransaction";
 
 export async function POST(req) {
-  if (!WEBHOOK_SECRET) {
+  if (!process.env.CLERK_WEBHOOK_SECRET) {
     console.error("CLERK_WEBHOOK_SECRET is not set in environment variables");
     throw new Error("Please add CLERK_WEBHOOK_SECRET to .env.local");
   }
@@ -27,7 +27,7 @@ export async function POST(req) {
   const payload = await req.json();
   const body = JSON.stringify(payload);
 
-  const wh = new Webhook(WEBHOOK_SECRET);
+  const wh = new Webhook(process.env.CLERK_WEBHOOK_SECRET);
 
   let evt;
 
